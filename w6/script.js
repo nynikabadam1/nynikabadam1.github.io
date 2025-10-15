@@ -34,27 +34,39 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Disable the load button while loading
         
         // YOUR CODE HERE:
-        
+        statusDisplay.className = 'status-display loading';
+        statusMessage.textContent = 'Loading';
+        loadButton.disabled = true;
         
         try {
             // Step 2: Use fetch() to load data
             // Hint: const response = await fetch('restaurants.json');
             // Hint: Check if response.ok before continuing
+
+            const response = await fetch('restaurants.json');
+            if (!response.ok)
+                throw new Error('sad, load failed')
             
             // Step 3: Convert response to JSON
             // Hint: const data = await response.json();
-            
+            const data = await response.json();
+
             // Step 4: Store data in global variable
             // Hint: restaurants = data;
-            
-            // YOUR CODE HERE:
-            
+            restaurants = data;            
             
             // Step 5: Show success state and enable buttons
             // Hint: Update statusDisplay classes and message
             // Hint: Enable all the method buttons
             
             // YOUR CODE HERE:
+            statusDisplay.className = 'status-display success';
+            statusMessage.textContent = "Yayyyyyyyy";
+            loadButton.disabled = false;
+            displayButton.disabled = false;
+            filterButton.disabled = false;
+            mapButton.disabled = false;
+            errorButton.disabled = false;
             
             
         } catch (error) {
@@ -63,7 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hint: Log the actual error for debugging
             
             // YOUR CODE HERE:
-            
+            statusDisplay.className = 'status-display error';
+            statusMessage.textContent = error.message;
+            console.error(error);
+            loadButton.disabled = false;
             
         }
     });
@@ -86,8 +101,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: restaurants.forEach(function(restaurant) { })
         
         // YOUR CODE HERE:
-        
-        
+        restaurantList.innerHTML = '';
+        restaurants.forEach((restaurant) => { 
+            const newDiv = document.createElement("div");    
+            newDiv.innerHTML = restaurant.name + " (" + restaurant.cuisine + ")";
+            restaurantList.innerHTML += newDiv.outerHTML;
+        })
+        console.log(`Loaded ${restaurants.length} restaurants`);
     });
     
     // Filter cheap restaurants (same logic, loaded data)
@@ -103,9 +123,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: const cheapRestaurants = restaurants.filter(function(restaurant) { })
         
         // YOUR CODE HERE:
-        
-        
+        const cheapRestaurants = restaurants.filter((restaurant)=> {
+                return (restaurant.priceRange === "$") || (restaurant.priceRange === "$$");  
+        })
+        filteredList.innerHTML = '';
+        cheapRestaurants.forEach((restaurant)=> {
+            const newDiv = document.createElement("div");    
+            newDiv.innerHTML = restaurant.name;
+            filteredList.innerHTML += newDiv.outerHTML;
+        });
+        console.log(`Loaded ${restaurants.length} restaurants`);
+
     });
+    
     
     // Show restaurant names (same logic, loaded data)
     mapButton.addEventListener('click', function() {
@@ -120,8 +150,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: const names = restaurants.map(function(restaurant) { })
         
         // YOUR CODE HERE:
-        
-        
+        const names = restaurants.map(function(restaurant) { 
+            return restaurant.name;
+        })
+        mappedList.innerHTML = '';
+        names.forEach((restaurant)=> {
+            const newDiv = document.createElement("div");    
+            newDiv.innerHTML = restaurant;
+            mappedList.innerHTML += newDiv.outerHTML;
+        });   
+        console.log(`Loaded ${restaurants.length} restaurants`);
+
     });
     
     // ============================================
@@ -150,7 +189,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hint: Create error message div with helpful text
             
             // YOUR CODE HERE:
-            
+            errorDisplay.innerHTML = '';
+            const newDiv = document.createElement("div");
+            newDiv.className = "status-display error";    
+            newDiv.innerHTML = "Data loading failed. Maybe it's a broken URL (it is)";
+            errorDisplay.innerHTML += newDiv.outerHTML;
             
             console.error('Demonstrated error:', error);
         }
