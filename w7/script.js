@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Use the same loading pattern from Tutorial 6
         
         // YOUR CODE HERE:
-        
+        statusDisplay.className = 'status-display loading';
+        statusMessage.textContent = 'Loading';
+        loadButton.disabled = true;
         
         try {
             // Step 2: Load the GeoJSON data
@@ -45,19 +47,26 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hint: restaurants = restaurantData.features; (GeoJSON has a 'features' array)
             
             // YOUR CODE HERE:
-            
+            await fetch('restaurants.geojson')
+            const restaurantData = await response.json();
+            restaurants = restaurantData.features;
             
             // Step 4: Show success and enable interface
             // Hint: Show data summary, enable view controls
             // Hint: Call showDataSummary() and showInitialView()
             
             // YOUR CODE HERE:
+            // statusDisplay.className = 'data-summary';
+            showDataSummary();
+            showInitialView();
             
             
         } catch (error) {
             // Step 5: Handle loading errors
             // YOUR CODE HERE:
-            
+            statusDisplay.className = 'status-display error';
+            statusMessage.textContent = error.message;
+            console.error(error);
             
         }
     });
@@ -72,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Call switchToView('card') and updateViewButtons
         
         // YOUR CODE HERE:
-        
+        switchToView('card');
+        updateViewButtons();
         
     });
     
@@ -80,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tableViewBtn.addEventListener('click', function() {
         // Step 7: Switch to table view
         // YOUR CODE HERE:
-        
+        switchToView('table');
+        updateViewButtons();
         
     });
     
@@ -88,7 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
     statsViewBtn.addEventListener('click', function() {
         // Step 8: Switch to stats view
         // YOUR CODE HERE:
-        
+        switchToView('stats');
+        updateViewButtons();
         
     });
     
@@ -106,6 +118,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Focus on: name, location, recent inspection status
         
         // YOUR CODE HERE:
+        restaurants.forEach(function(restaurant) {
+            const restaurantCard = document.querySelector('#restaurant-card');
+            restaurantCard.name = restaurant.properties.name;
+            restaurantCard.location = restaurant.properties.location;
+            restaurantCard.inspection_results= restaurant.properties.inspection_results;
+
+            const newDiv = document.createElement("div");    
+            newDiv.innerHTML = restaurantCard.name + restaurantCard.location + restaurantCard.inspection_results;
+            cardGrid.innerHTML += newDiv.outerHTML;
+        })
         
         
         console.log('Card view: Emphasizing restaurant discovery');
