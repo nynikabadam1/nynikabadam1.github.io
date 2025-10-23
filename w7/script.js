@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // YOUR CODE HERE:
         statusDisplay.className = 'status-display loading';
-        statusMessage.textContent = 'Loading';
         loadButton.disabled = true;
         
         try {
@@ -47,7 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hint: restaurants = restaurantData.features; (GeoJSON has a 'features' array)
             
             // YOUR CODE HERE:
-            await fetch('restaurants.geojson')
+            const response = await fetch('restaurants.geojson')
+            if (!response.ok)
+                throw new Error('sad, load failed')
+
             const restaurantData = await response.json();
             restaurants = restaurantData.features;
             
@@ -56,17 +58,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hint: Call showDataSummary() and showInitialView()
             
             // YOUR CODE HERE:
-            // statusDisplay.className = 'data-summary';
+            statusDisplay.className = 'status-display success';
+            cardViewBtn.disabled = false;
+            tableViewBtn.disabled = false;
+            statsViewBtn.disabled = false;
             showDataSummary();
             showInitialView();
+
             
             
         } catch (error) {
             // Step 5: Handle loading errors
             // YOUR CODE HERE:
             statusDisplay.className = 'status-display error';
-            statusMessage.textContent = error.message;
             console.error(error);
+            loadButton.disabled = false;
             
         }
     });
@@ -118,18 +124,22 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Focus on: name, location, recent inspection status
         
         // YOUR CODE HERE:
-        restaurants.forEach(function(restaurant) {
-            const restaurantCard = document.querySelector('#restaurant-card');
-            restaurantCard.name = restaurant.properties.name;
-            restaurantCard.location = restaurant.properties.location;
-            restaurantCard.inspection_results= restaurant.properties.inspection_results;
-
-            const newDiv = document.createElement("div");    
-            newDiv.innerHTML = restaurantCard.name + restaurantCard.location + restaurantCard.inspection_results;
-            cardGrid.innerHTML += newDiv.outerHTML;
-        })
+        restaurants.forEach((restaurant) => {
+        const card = document.createElement("div");
+        card.className = 'restaurant-card';
         
+        const complianceStatus = getComplianceStatus(restaurant);
+        card.classList.add(complianceStatus);
         
+        card.innerHTML = `
+            <div class="card-name">${restaurant.properties.name}</div>
+            <div class="card-location">${restaurant.properties.city}</div>
+            <span class="card-status ${complianceStatus}">${restaurant.properties.inspection_results || 'No Status'}</span>
+            <div class="card-date">Inspected: ${formatDate(restaurant.properties.inspection_date)}</div>
+        `;
+        
+        cardGrid.appendChild(card);
+        })  
         console.log('Card view: Emphasizing restaurant discovery');
     }
     
@@ -147,11 +157,52 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Include specific compliance fields for comparison
         
         // YOUR CODE HERE:
-        
+        restaurants.forEach((restaurant, index) => {
+            if (index >= 50) return;
+
+            const newRow = document.createElement("tr");
+
+            const name = document.createElement("td");
+            name.textContent = restaurant.properties.name;
+            name.className = 'table-restaurant-name';
+
+            const city = document.createElement("td");
+            city.textContent = restaurant.properties.city;
+
+            const inspectionDate = document.createElement("td");
+            inspectionDate.textContent = restaurant.properties.inspection_date;
+
+            const inspectionResults = document.createElement("td");
+            inspectionResults.textContent = restaurant.properties.inspection_results;
+            if (getComplianceStatus(restaurant) === 'In Compliance'){
+                inspectionResults.className = 'table-status compliant';
+            } else {
+                inspectionResults.className = 'table-status non-compliant';
+            }
+
+            const handWashing = document.createElement("td");
+            handWashing.textContent = restaurant.properties.proper_hand_washing;
+            
+            const foodTemperature = document.createElement("td");
+            foodTemperature.textContent = restaurant.properties.cooling_time_and_temperature;
+
+            newRow.appendChild(name);
+            newRow.appendChild(city);
+            newRow.appendChild(inspectionDate);
+            newRow.appendChild(inspectionResults);
+            newRow.appendChild(handWashing);
+            newRow.appendChild(foodTemperature);
+
+            tableBody.appendChild(newRow);
+            tableBody.className = 'inspection-table';
+
+
+        })
         
         console.log('Table view: Emphasizing safety record comparison');
     }
     
+
     // ============================================
     // STATS VIEW - "Analyze patterns"
     // ============================================
@@ -163,8 +214,55 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Group by city and calculate city-level stats
         
         // YOUR CODE HERE:
+        const statsGrid = document.querySelector('#stats-grid');
+        const cityStatsContainer = document.querySelector('#city-stats');
         
+        statsGrid.innerHTML = '';
+        cityStatsContainer.innerHTML = '';
         
+        const compliantCount = restaurants.filter(r => getComplianceStatus(r) === 'compliant').length;
+        const nonCompliantCount = restaurants.filter(r => getComplianceStatus(r) === 'non-compliant').length;
+        const totalCount = restaurants.length;
+        const compliancePercentage = ((compliantCount / totalCount) * 100).toFixed(1);
+        
+        statsGrid.innerHTML = `
+            <div class="stat-card">
+                <p class="stat-label">Total Restaurants</p>
+                <p class="stat-number">${totalCount}</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Compliant</p>
+                <p class="stat-number">${compliantCount}</p>
+                <p class="stat-label">${compliancePercentage}%</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Non-Compliant</p>
+                <p class="stat-number">${nonCompliantCount}</p>
+                <p class="stat-label">${(100 - compliancePercentage).toFixed(1)}%</p>
+            </div>
+        `;
+        
+        const cityData = restaurants.reduce((acc, restaurant) => {
+            const city = restaurant.properties.city;
+            if (!acc[city]) acc[city] = { total: 0, compliant: 0 };
+            acc[city].total++;
+            if (getComplianceStatus(restaurant) === 'compliant') acc[city].compliant++;
+            return acc;
+        }, {});
+        
+        Object.entries(cityData)
+            .sort(([,a], [,b]) => b.total - a.total)
+            .forEach(([city, data]) => {
+                const cityRate = ((data.compliant / data.total) * 100).toFixed(1);
+                cityStatsContainer.innerHTML += `
+                    <div class="city-stat">
+                        <span class="city-name">${city}</span>
+                        <span class="city-compliance">${data.total} restaurants • ${cityRate}% compliant</span>
+                    </div>
+                `;
+            });
+        
+
         console.log('Stats view: Emphasizing county-wide patterns');
     }
     
@@ -178,17 +276,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hint: Count total restaurants, compliance rate, unique cities
         
         // YOUR CODE HERE:
+        const recordCount = document.querySelector('#record-count');
+        recordCount.textContent = restaurants.length;
+
+        const compliantCount = restaurants.filter(r => getComplianceStatus(r) === 'compliant').length;
+        const complianceRate = document.querySelector('#compliance-rate');
+        complianceRate.textContent = ((compliantCount / restaurants.length) * 100).toFixed(1) + '%';
         
-        
+        const uniqueCities = document.querySelector('#city-count');
+        uniqueCities.textContent = new Set(restaurants.map(r => r.properties.city)).size;
+
         dataSummary.classList.remove('hidden');
-    }
-    
-    // Switch between views
-    function switchToView(viewName) {
-    currentView = viewName;
-    
-    // Hide all view panels
-    document.querySelectorAll('.view-panel').forEach(panel => {
+        }
+        
+        // Switch between views
+        function switchToView(viewName) {
+        currentView = viewName;
+        
+        // Hide all view panels
+        document.querySelectorAll('.view-panel').forEach(panel => {
         panel.classList.remove('active');
     });
     

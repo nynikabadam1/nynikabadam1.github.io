@@ -128,7 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         filteredList.innerHTML = '';
         cheapRestaurants.forEach((restaurant)=> {
-            const newDiv = document.createElement("div");    
+            const newDiv = document.createElement("div");
+            newDiv.className = 'restaurant-card';    
             newDiv.innerHTML = restaurant.name;
             filteredList.innerHTML += newDiv.outerHTML;
         });
