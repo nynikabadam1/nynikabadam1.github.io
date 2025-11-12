@@ -234,11 +234,11 @@ body {
   padding: 2rem;
   border-radius: 8px;
   margin: 0 auto;
-  max-width: 1000px;
+  width: 1000px;
   height: 500px; 
 }
 
-chart-container canvas {
+.chart-container canvas {
   max-height: 100%;
   max-width: 100%;
 }
