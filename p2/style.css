@@ -228,6 +228,21 @@ body {
 }
 
 /* STATS LAYOUT */
+
+.chart-container {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 0 auto;
+  max-width: 1000px;
+  height: 500px; 
+}
+
+chart-container canvas {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 #stats-grid {
     display: flex;
     flex-direction: column;
