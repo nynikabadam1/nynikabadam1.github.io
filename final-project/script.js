@@ -218,6 +218,113 @@ gsap.timeline({
 
 })();
 
+//SWITCH CLICK
+const switchImage = document.querySelector('.switch-image');
+const switchImageOn = document.querySelector('.switch2-image');
+const lightsImage = document.querySelector('.lights-image');
+const lightsImageOn = document.querySelector('.lights2-image');
+const oval1 = document.querySelector('.oval1-image');
+const text1 = document.querySelector('.activities1-text');
+const text2 = document.querySelector('.activities2-text');
+const arrow1 = document.querySelector('.arrow1-image');
+
+let isLightsOn = false;
+
+if (switchImage) {
+  switchImage.addEventListener('click', () => {
+    if (!isLightsOn) {
+      gsap.to(switchImage, { opacity: 0, duration: 0.3 });
+      gsap.to(switchImageOn, { display: 'block', opacity: 1, duration: 0.3 });
+      
+      gsap.to(lightsImage, { opacity: 0, duration: 0.5 });
+      gsap.to(lightsImageOn, { display: 'block', opacity: 1, duration: 0.5 });
+
+      gsap.to(text1, { opacity: 0, duration: 0.1 });
+      gsap.to(text2, { opacity: 1, duration: 0.1, delay: 0.2 });
+      gsap.to(arrow2, { opacity: 1, duration: 0.1, delay: 0.2 });
+      gsap.to(arrow1, { opacity: 0, duration: 0.1 });
+      
+      // Reveal new elements
+      gsap.to(oval1, { opacity: 1, duration: 0.2, delay: 0.2 });
+
+      isLightsOn = true;
+    } else {
+      // Switch to OFF state
+      gsap.to(switchImage, { opacity: 1, duration: 0.3 });
+      gsap.to(switchImageOn, { opacity: 0, duration: 0.3, onComplete: () => {
+        gsap.set(switchImageOn, { display: 'none' });
+      }});
+      
+      gsap.to(lightsImage, { opacity: 1, duration: 0.5 });
+      gsap.to(lightsImageOn, { opacity: 0, duration: 0.5, onComplete: () => {
+        gsap.set(lightsImageOn, { display: 'none' });
+      }});
+      
+      // Hide elements
+      gsap.to(oval1, { opacity: 0, duration: 0.3 });
+      
+      isLightsOn = false;
+    }
+  });
+  
+  // Make switch clickable
+  switchImage.style.cursor = 'pointer';
+}
+
+//RECORD CLICK
+const recordImage = document.querySelector('.record-image');
+const recordImageOn = document.querySelector('.record2-image');
+const musicNotes = document.querySelectorAll('.music-notes');
+const text3 = document.querySelector('.activities3-text');
+const oval2 = document.querySelector('.oval2-image');
+const arrow2 = document.querySelector('.arrow2-image');
+
+let recordPressed = false;
+
+if (recordImage) {
+  recordImage.addEventListener('click', () => {
+    if (!recordPressed) {
+      gsap.to(recordImage, { opacity: 0, duration: 0.3 });
+      gsap.to(recordImageOn, { display: 'block', opacity: 1, duration: 0.3 });
+
+      gsap.to(text2, { opacity: 0, duration: 0.1 });
+      gsap.to(arrow2, { opacity: 0, duration: 0.1 });
+      gsap.to(text3, { opacity: 1, duration: 0.1, delay: 0.2 });
+      
+      gsap.to(oval2, { opacity: 1, duration: 0.2, delay: 0.2 });
+      gsap.to(musicNotes, { opacity:1, duration: 0.5, delay: 0.2 });
+      
+      recordPressed = true;
+    } else {
+      gsap.to(recordImage, { opacity: 1, duration: 0.3 });
+      gsap.to(arrow2, { opacity: 1, duration: 0.1 });
+      gsap.to(recordImageOn, { opacity: 0, duration: 0.3, onComplete: () => {
+        gsap.set(recordImageOn, { display: 'none' });
+      }});
+      
+      gsap.to(oval2, { opacity: 0, duration: 0.3 });
+      
+      recordPressed = false;
+    }
+  });
+    recordImage.style.cursor = 'pointer';
+
+}
+
+gsap.utils.toArray('.reveal').forEach((elem) => {
+  gsap.to(elem, {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: elem,
+      start: "top 80%",  
+      toggleActions: "play none none reverse" 
+    }
+  });
+});
+
 
 // const sunsetText = document.querySelector('.time-text');
 
