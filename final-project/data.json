@@ -1,0 +1,123 @@
+[
+    {
+        "id": 1,
+        "date": "2024-10-16",
+        "sunrise": "7:18 AM",
+        "sunset": "6:30 PM",
+        "daylength": "11:11:59"
+    },{
+        "id": 2,
+        "date": "2024-10-18",
+        "sunrise": "7:20 AM",
+        "sunset": "6:27 PM",
+        "daylength": "11:07:29"
+    },{
+        "id": 3,
+        "date": "2024-10-20",
+        "sunrise": "7:22 AM",
+        "sunset": "6:25 PM",
+        "daylength": "11:03:01"
+    },{
+        "id": 4,
+        "date": "2024-10-22",
+        "sunrise": "7:24 AM",
+        "sunset": "6:22 PM",
+        "daylength": "10:58:35"
+    },{
+        "id": 5,
+        "date": "2024-10-24",
+        "sunrise": "7:26 AM",
+        "sunset": "6:20 PM",
+        "daylength": "10:54:12"
+    },{
+        "id": 6,
+        "date": "2024-10-26",
+        "sunrise": "7:28 AM",
+        "sunset": "6:18 PM",
+        "daylength": "10:49:52"
+    },{
+        "id": 7,
+        "date": "2024-10-28",
+        "sunrise": "7:30 AM",
+        "sunset": "6:15 PM",
+        "daylength": "10:45:35"
+    },{
+        "id": 8,
+        "date": "2024-10-30",
+        "sunrise": "7:32 AM",
+        "sunset": "6:13 PM",
+        "daylength": "10:41:22"
+    },{
+        "id": 9,
+        "date": "2024-11-01",
+        "sunrise": "7:34 AM",
+        "sunset": "6:11 PM",
+        "daylength": "10:37:13"
+    },{
+        "id": 10,
+        "date": "2024-11-03",
+        "sunrise": "6:36 AM",
+        "sunset": "5:09 PM",
+        "daylength": "10:33:09"
+    },{
+        "id": 11,
+        "date": "2024-11-05",
+        "sunrise": "6:38 AM",
+        "sunset": "5:07 PM",
+        "daylength": "10:29:09"
+    },{
+        "id": 12,
+        "date": "2024-11-07",
+        "sunrise": "6:40 AM",
+        "sunset": "5:05 PM",
+        "daylength": "10:25:15"
+    },{
+        "id": 13,
+        "date": "2024-11-09",
+        "sunrise": "6:42 AM",
+        "sunset": "5:03 PM",
+        "daylength": "10:21:26"
+    },{
+        "id": 14,
+        "date": "2024-11-11",
+        "sunrise": "6:44 AM",
+        "sunset": "5:02 PM",
+        "daylength": "10:17:44"
+    },{
+        "id": 15,
+        "date": "2024-11-13",
+        "sunrise": "6:46 AM",
+        "sunset": "5:00 PM",
+        "daylength": "10:14:08"
+    },{
+        "id": 16,
+        "date": "2024-11-15",
+        "sunrise": "6:48 AM",
+        "sunset": "4:59 PM",
+        "daylength": "10:10:39"
+    },{
+        "id": 17,
+        "date": "2024-11-17",
+        "sunrise": "6:50 AM",
+        "sunset": "4:58 PM",
+        "daylength": "10:07:18"
+    },{
+        "id": 18,
+        "date": "2024-11-19",
+        "sunrise": "6:52 AM",
+        "sunset": "4:56 PM",
+        "daylength": "10:04:05"
+    },{
+        "id": 19,
+        "date": "2024-11-21",
+        "sunrise": "6:54 AM",
+        "sunset": "4:55 PM",
+        "daylength": "10:01:00"
+    },{
+        "id": 20,
+        "date": "2024-11-23",
+        "sunrise": "6:56 AM",
+        "sunset": "4:54 PM",
+        "daylength": "9:58:04"
+    }
+]
