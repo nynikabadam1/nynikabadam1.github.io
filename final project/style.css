@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poly:ital@0;1&display=swap');
+@font-face{
+ font-family:'digital-clock-font';
+ src: url('DS-DIGI.TTF');
+}
+
+:root {
+    --background-color1: #242350;
+    --background-color2: #C4EDFF;
+    --background-color3: #A0CEF7;
+    --text-color: #fefefe;
+    --border-color: #ddd;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    font-family: "Instrument Serif", serif;
+}   
+
+body {
+    background: var(--background-color1);
+    font-family: "Instrument Serif", serif;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.section{
+	height:100vh;
+	display: flex;
+	align-items:center;
+	justify-content:center;
+    font-size: 60px;
+    background: transparent;
+    position: relative;
+}
+
+.intro-section{
+    background: var(--background-color2);
+}
+
+.intro{
+    position: relative;
+}
+
+.intro2{
+    position: relative;
+}
+
+.intro3{
+    position: relative;
+}
+
+.intro4{
+    position: relative;
+}
+
+.whatif{
+    background: var(--background-color1);
+    flex-direction: column;
+    flex: 1;   
+    position: relative;
+}
+
+.nochoice-section{
+    background: var(--background-color1);
+}
+
+.candle-container{
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.candle1{
+    position: absolute;
+    top: 335px;
+    width: 400px;
+    height: 400px;
+}
+
+.candle2{
+    position: absolute;
+    top: 115%;
+    display: flex;
+    justify-content: center;
+}
+
+.image-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: left;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10 px;
+    flex-grow: 1;
+    align-items: center;
+    padding-left: 41%;
+}
+
+.intro-image{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    position: absolute;
+}
+
+.intro2-image{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    position: absolute;
+}
+
+.intro3-image{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    position: absolute;
+}
+
+.intro4-image{
+    width: 50%;
+    height: auto;
+    position: absolute;
+    left: 25%;
+    top:15%
+}
+
+.leaves-text{
+    position: absolute;
+    color:#3E3314;
+    left: 300px;
+}
+
+.title-text{
+    position: absolute;
+    color:#3E7F9B;
+    right: 100px;
+}
+
+.winter-text{
+    position: absolute;
+    color:#fff;
+    right: 100px;
+}
+
+.sucks-text{
+    position: absolute;
+    color:#fff;
+    left: 50px;
+    bottom: 50px;
+}
+
+.time-text{
+    /* position: absolute; */
+    color:#807DFF;
+    /* left: 50%;
+    top: -25px; */
+    font-family: 'digital-clock-font', monospace;
+}
+
+.sunset-image{
+    width: 50px;
+    height: 50px;
+    /* position: absolute; */
+    /* left: 50%;
+    top: -25px; */
+}
+
+.whatif-text{
+    top: 20%;
+}
