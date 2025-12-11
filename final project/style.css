@@ -155,15 +155,20 @@ body {
     position: absolute;
     color:#fff;
     left: 50px;
-    bottom: 50px;
+    bottom: 40%;
 }
 
 .time-text{
-    /* position: absolute; */
+    position: relative;
+    overflow: hidden;
     color:#807DFF;
     /* left: 50%;
     top: -25px; */
     font-family: 'digital-clock-font', monospace;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+
 }
 
 .sunset-image{
@@ -176,4 +181,13 @@ body {
 
 .whatif-text{
     top: 20%;
+}
+
+.sun-image{
+    width: 400px;
+    height: auto;
+    position: absolute;
+    right: 37%;
+    top: 29%;
+    transform: translateY(100%);
 }

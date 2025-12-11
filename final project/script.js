@@ -1,13 +1,33 @@
-// import loadData from "./load_data";
 
-// async function main() {
-//     const data = await loadData();
-//     console.log(data);
-// }
-// main();
+let sunsets =[];
+let sunrises =[];
+let daylengths =[];
 
-//change background color
+async function loadData() {
+  try {
+    console.log("loading data...");
+    const response = await fetch('data.json');
+    if (!response.ok)
+      throw new Error(`HTTP error! status: ${response.status}`)
+
+    const result = await response.json();
+    sunsets = result.map(item => item.sunset);
+    sunrises = result.map(item => item.sunrise);
+    daylengths = result.map(item => item.daylength);
+
+    console.log("data loaded", result);
+    return result;
+  
+} catch (error) {
+    statusDisplay.className = 'status-display error';
+    console.error(error);
+}
+}
+
 gsap.registerPlugin(ScrollTrigger);
+
+(async () => {
+  await loadData();
 
 //INTRO
 gsap.to(".intro", {
@@ -49,19 +69,7 @@ gsap.to(".intro3", {
   duration: 5
 }, 0);
 
-// gsap.to(".intro4", {
-//   scrollTrigger:{
-//     trigger: ".intro4",
-//     start: "center center",
-//     end: "bottom top",
-//     pin: true,
-//     scrub: true,
-//     markers: true
-//   },
-//   x: 2000,
-//   duration: 5
-// }, 0);
-
+//change background color
 gsap.timeline({
   scrollTrigger: {
     trigger: ".intro-section",
@@ -81,6 +89,63 @@ gsap.timeline({
   duration:1
 }, 1);
 
+//SUNSET TIME SCROLL
+const sunsetText = document.querySelector('.time-text');
+
+if (sunsetText && sunsets.length > 0) {
+  sunsetText.textContent = sunsets[0];
+  let currentIndex = 0; 
+
+  const sunImage = document.querySelector('.sun-image');
+  const sunHeight = sunImage ? sunImage.offsetHeight : 450; 
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".intro4", 
+      start: "top top",
+      end: `+=${sunsets.length * 100}%`,        
+      pin: true,
+      scrub: 1,
+      markers: true,
+      onUpdate: (self) => {
+        // TIME CHANGING
+        const newIndex = Math.min(
+          Math.floor(self.progress * sunsets.length),
+          sunsets.length - 1
+        );
+        
+        if (newIndex !== currentIndex) {
+          gsap.to(sunsetText, {
+            y: -50,
+            opacity: 0,
+            duration: 0.1,
+            ease: "power2.in",
+            onComplete: () => {
+              sunsetText.textContent = sunsets[newIndex];
+              gsap.set(sunsetText, { y: 50, opacity: 0 });
+              gsap.to(sunsetText, {
+                y: 0,
+                opacity: 1,
+                duration: 0.1,
+                ease: "power2.out"
+              });
+            }
+          });
+          currentIndex = newIndex; 
+        }
+
+        // SUN CLIPPING AND MOVEMENT 
+        const progress = self.progress;
+        const pixelsMoved = progress * sunHeight; 
+        
+        gsap.set(".sun-image", {
+          y: pixelsMoved,
+          clipPath: `inset(0 0 ${pixelsMoved}px 0)` 
+        });
+      } 
+    }
+  });
+}
 
 //NO CHOICE PAGE
 function splitText1(selector) {
@@ -150,3 +215,50 @@ gsap.timeline({
   opacity: 1,
   duration: 0
 }, 0.9);
+
+})();
+
+
+// const sunsetText = document.querySelector('.time-text');
+
+// if (sunsetText && sunsets.length > 0) {
+//   sunsetText.textContent = sunsets[0];
+//   let currentIndex = 0; 
+
+//   gsap.to({}, {
+//     scrollTrigger: {
+//       trigger: ".intro4", 
+//       start: "top top",
+//       end: `+=${sunsets.length * 100}%`,        
+//       pin: true,
+//       scrub: 1,
+//       markers: true,
+//       onUpdate: (self) => {
+//         const newIndex = Math.min(
+//           Math.floor(self.progress * sunsets.length),
+//           sunsets.length - 1
+//         );
+        
+//         if (newIndex !== currentIndex) {
+//           gsap.to(sunsetText, {
+//             y: -50,
+//             opacity: 0,
+//             duration: 0.1,
+//             ease: "power2.in",
+//             onComplete: () => {
+//               sunsetText.textContent = sunsets[newIndex];
+//               gsap.set(sunsetText, { y: 50, opacity: 0 });
+//               gsap.to(sunsetText, {
+//                 y: 0,
+//                 opacity: 1,
+//                 duration: 0,
+//                 ease: "power2.out"
+//               });
+//             }
+//           });
+//           currentIndex = newIndex; 
+//         }
+//       } 
+//     } 
+//   }); 
+// }

@@ -5,33 +5,18 @@
         "sunrise": "7:18 AM",
         "sunset": "6:30 PM",
         "daylength": "11:11:59"
-    },
-
-    {
+    },{
         "id": 2,
         "date": "2024-10-18",
         "sunrise": "7:20 AM",
         "sunset": "6:27 PM",
         "daylength": "11:07:29"
-    },
-    {
+    },{
         "id": 3,
         "date": "2024-10-20",
         "sunrise": "7:22 AM",
         "sunset": "6:25 PM",
         "daylength": "11:03:01"
-    },{
-        "id": 2,
-        "date": "2024-10-16",
-        "sunrise": "7:18 AM",
-        "sunset": "6:30 PM",
-        "daylength": "11:11:59"
-    },{
-        "id": 3,
-        "date": "2024-10-16",
-        "sunrise": "7:18 AM",
-        "sunset": "6:30 PM",
-        "daylength": "11:11:59"
     },{
         "id": 4,
         "date": "2024-10-22",
@@ -96,7 +81,7 @@
         "id": 14,
         "date": "2024-11-11",
         "sunrise": "6:44 AM",
-        "sunset": "5:03 PM",
+        "sunset": "5:02 PM",
         "daylength": "10:17:44"
     },{
         "id": 15,
@@ -134,65 +119,5 @@
         "sunrise": "6:56 AM",
         "sunset": "4:54 PM",
         "daylength": "9:58:04"
-    },{
-        "id": 21,
-        "date": "2024-11-25",
-        "sunrise": "6:58 AM",
-        "sunset": "4:54 PM",
-        "daylength": "9:55:18"
-    },{
-        "id": 22,
-        "date": "2024-11-27",
-        "sunrise": "7:00 AM",
-        "sunset": "4:53 PM",
-        "daylength": "9:52:42"
-    },{
-        "id": 23,
-        "date": "2024-11-29",
-        "sunrise": "7:02 AM",
-        "sunset": "4:53 PM",
-        "daylength": "9:50:16"
-    },{
-        "id": 24,
-        "date": "2024-12-01",
-        "sunrise": "7:04 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:48:02"
-    },{
-        "id": 25,
-        "date": "2024-12-03",
-        "sunrise": "7:06 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:45:59"
-    },{
-        "id": 26,
-        "date": "2024-12-05",
-        "sunrise": "7:08 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:44:08"
-    },{
-        "id": 27,
-        "date": "2024-12-07",
-        "sunrise": "7:09 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:42:29"
-    },{
-        "id": 28,
-        "date": "2024-12-09",
-        "sunrise": "7:11 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:41:03"
-    },{
-        "id": 29,
-        "date": "2024-12-11",
-        "sunrise": "7:13 AM",
-        "sunset": "4:52 PM",
-        "daylength": "9:39:49"
-    },{
-        "id": 30,
-        "date": "2024-12-13",
-        "sunrise": "7:14 AM",
-        "sunset": "4:53 PM",
-        "daylength": "9:38:50"
     }
 ]
