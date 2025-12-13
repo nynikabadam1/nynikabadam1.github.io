@@ -24,6 +24,14 @@ async function loadData() {
 }
 }
 
+// function getScrollMultiplier() {
+//     const width = window.innerWidth;
+//     if (width <= 480) return 0.6; 
+//     if (width <= 768) return 0.75; 
+//     if (width <= 1024) return 0.85; 
+//     return 1;
+// }
+
 gsap.registerPlugin(ScrollTrigger);
 
 (async () => {
@@ -39,7 +47,7 @@ gsap.to(".intro", {
     scrub: true,
     // markers: true
   },
-  x: 2000,
+  x: 2500,
   duration: 5
 }, 0);
 
@@ -98,11 +106,13 @@ if (sunsetText && sunsets.length > 0) {
 
   const sunImage = document.querySelector('.sun-image');
   const sunHeight = sunImage ? sunImage.offsetHeight : 450; 
+  // const scrollMultiplier = getScrollMultiplier();
 
   gsap.timeline({
     scrollTrigger: {
       trigger: ".intro4", 
       start: "top top",
+      // end: `+=${sunsets.length * 100 * scrollMultiplier}%`,        
       end: `+=${sunsets.length * 100}%`,        
       pin: true,
       scrub: 1,

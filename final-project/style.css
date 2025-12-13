@@ -105,26 +105,26 @@ body {
 }
 
 .intro-image{
-    width: 1750px;
+    width: 120%;
     height: auto;
-    left: -130px;
+    left: -8%;
     object-fit: fill;
     position: absolute;
 }
 
 .intro2-image{
-    width: 1750px;
+    width: 120%;
     height: auto;
-    left: -130px;
+    left: -8%;
     object-fit: fill;
     position: absolute;
 }
 
 .intro3-image{
-    width: 1750px;
+    width: 120%;
     height: auto;
+    left: -8%;
     top: 250px;
-    left: -130px;
     object-fit: fill;
     position: absolute;
 }
@@ -140,7 +140,7 @@ body {
 .leaves-text{
     position: absolute;
     color:#3E3314;
-    left: 300px;
+    left: 20%;
 }
 
 .title-text{
@@ -189,7 +189,7 @@ body {
 }
 
 .sun-image{
-    width: 400px;
+    width: 28%;
     height: auto;
     position: absolute;
     right: 37%;
@@ -324,3 +324,4 @@ body {
   opacity: 0;
   transform: translateY(20px);
 }
+
