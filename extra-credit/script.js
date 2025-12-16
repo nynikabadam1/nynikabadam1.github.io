@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (greetingText.textContent === 'Hello') {
             greetingText.textContent = 'Bye';
         } else {
-            greetingText.textContent = 'Hello';
+            greetingText.textContent = 'Hellooo';
         }
         console.log('Text changed to:', greetingText.textContent);
     });
