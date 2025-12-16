@@ -24,15 +24,10 @@ async function loadData() {
 }
 }
 
-// function getScrollMultiplier() {
-//     const width = window.innerWidth;
-//     if (width <= 480) return 0.6; 
-//     if (width <= 768) return 0.75; 
-//     if (width <= 1024) return 0.85; 
-//     return 1;
-// }
 
 gsap.registerPlugin(ScrollTrigger);
+const mm = gsap.matchMedia();
+
 
 (async () => {
   await loadData();
@@ -58,6 +53,8 @@ gsap.to(".intro2", {
     end: "bottom top",
     pin: true,
     scrub: true,
+    pinSpacing: true,
+    anticipatePin: 1,
     // markers: true
   },
   x: 2000,
@@ -71,6 +68,8 @@ gsap.to(".intro3", {
     end: "bottom top",
     pin: true,
     scrub: true,
+    pinSpacing: true,
+    anticipatePin: 1,
     // markers: true
   },
   x: 2000,
@@ -116,6 +115,8 @@ if (sunsetText && sunsets.length > 0) {
       end: `+=${sunsets.length * 100}%`,        
       pin: true,
       scrub: 1,
+      pinSpacing: true,
+      anticipatePin: 1,
       // markers: true,
       onUpdate: (self) => {
         // TIME CHANGING
@@ -160,26 +161,28 @@ if (sunsetText && sunsets.length > 0) {
 //NO CHOICE PAGE
 function splitText1(selector) {
   const element = document.querySelector(selector);
+  if (!element) return [];
+
   const text = element.textContent;
   const chars = text.split('');
   
   element.innerHTML = chars
-    .map(char => {
-      if (char === ' ') {
-        return '<span class="char">&nbsp;</span>';
-      }
-      return `<span class="char">${char}</span>`;
-    })
+    .map(char => char === ' '
+      ? '<span class="char">&nbsp;</span>'
+      : `<span class="char">${char}</span>`
+    )
     .join('');
-  
-  return document.querySelectorAll(`${selector} .char`);
+
+  return element.querySelectorAll('.char');
 }
 
 const chars1 = splitText1(".nochoice p");
 const chars2 = splitText1(".whatif p");
 
-gsap.set(chars1, { opacity: 1 });
-gsap.set(chars2, { opacity: 0 });
+if (chars1.length && chars2.length) {
+  gsap.set(chars1, { opacity: 1 });
+  gsap.set(chars2, { opacity: 0 });
+}
 
 gsap.to(chars1, {
   opacity: 0,
@@ -191,6 +194,8 @@ gsap.to(chars1, {
     end: "+=150%",
     pin: true,
     scrub: true,
+    pinSpacing: true,
+    anticipatePin: 1,
     // markers: true
   }
 });
@@ -205,13 +210,15 @@ gsap.timeline({
     end: "+=150%",
     pin: true,
     scrub: true,
+    pinSpacing: true,
+    anticipatePin: 1,
     // markers: true
   }
 })
 .to(chars2, {
   opacity: 1,
   duration: 0,
-  stagger: 0.05
+  stagger: 0.05,
 }, 0)
 .to(".candle1", {
   opacity: 1,
@@ -226,8 +233,6 @@ gsap.timeline({
   duration: 0
 }, 0.9);
 
-})();
-
 //SWITCH CLICK
 const switchImage = document.querySelector('.switch-image');
 const switchImageOn = document.querySelector('.switch2-image');
@@ -237,6 +242,7 @@ const oval1 = document.querySelector('.oval1-image');
 const text1 = document.querySelector('.activities1-text');
 const text2 = document.querySelector('.activities2-text');
 const arrow1 = document.querySelector('.arrow1-image');
+const arrow2 = document.querySelector('.arrow2-image');
 
 let isLightsOn = false;
 
@@ -287,7 +293,6 @@ const recordImageOn = document.querySelector('.record2-image');
 const musicNotes = document.querySelectorAll('.music-notes');
 const text3 = document.querySelector('.activities3-text');
 const oval2 = document.querySelector('.oval2-image');
-const arrow2 = document.querySelector('.arrow2-image');
 
 let recordPressed = false;
 
@@ -321,61 +326,51 @@ if (recordImage) {
 
 }
 
-gsap.utils.toArray('.reveal').forEach((elem) => {
-  gsap.to(elem, {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: elem,
-      start: "top 80%",  
-      toggleActions: "play none none reverse" 
-    }
+})();
+
+//RESPONSIVENESS
+mm.add("(min-width: 769px)", () => {
+
+  gsap.utils.toArray(".reveal").forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
   });
+
+});
+
+mm.add("(max-width: 768px)", () => {
+
+  gsap.utils.toArray(".reveal").forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  });
+
 });
 
 
-// const sunsetText = document.querySelector('.time-text');
 
-// if (sunsetText && sunsets.length > 0) {
-//   sunsetText.textContent = sunsets[0];
-//   let currentIndex = 0; 
 
-//   gsap.to({}, {
-//     scrollTrigger: {
-//       trigger: ".intro4", 
-//       start: "top top",
-//       end: `+=${sunsets.length * 100}%`,        
-//       pin: true,
-//       scrub: 1,
-//       markers: true,
-//       onUpdate: (self) => {
-//         const newIndex = Math.min(
-//           Math.floor(self.progress * sunsets.length),
-//           sunsets.length - 1
-//         );
-        
-//         if (newIndex !== currentIndex) {
-//           gsap.to(sunsetText, {
-//             y: -50,
-//             opacity: 0,
-//             duration: 0.1,
-//             ease: "power2.in",
-//             onComplete: () => {
-//               sunsetText.textContent = sunsets[newIndex];
-//               gsap.set(sunsetText, { y: 50, opacity: 0 });
-//               gsap.to(sunsetText, {
-//                 y: 0,
-//                 opacity: 1,
-//                 duration: 0,
-//                 ease: "power2.out"
-//               });
-//             }
-//           });
-//           currentIndex = newIndex; 
-//         }
-//       } 
-//     } 
-//   }); 
-// }
